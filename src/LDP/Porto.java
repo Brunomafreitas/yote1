@@ -86,6 +86,8 @@ public class Porto {
     public static void main(String[] args) {
         Porto porto = new Porto(3);
         
+        NavioPetroleiro petro1 = new NavioPetroleiro("1234");
+        petro1.setCapacidadeCarga(200);
 
        
     }
