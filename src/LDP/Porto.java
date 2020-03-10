@@ -94,7 +94,7 @@ public class Porto {
         porto.addNavio(petro1);
         porto.addNavio(contenta);
         System.out.println(porto.getCapacidadeTotalContentores());
-
+        System.out.println("");
     }
 
 }
