@@ -85,11 +85,16 @@ public class Porto {
 
     public static void main(String[] args) {
         Porto porto = new Porto(3);
-        
+
         NavioPetroleiro petro1 = new NavioPetroleiro("1234");
         petro1.setCapacidadeCarga(200);
+        petro1.setComprimento(100);
+        NavioPortaContentores contenta = new NavioPortaContentores("12312");
+        contenta.setNoMaxContentores(100);
+        porto.addNavio(petro1);
+        porto.addNavio(contenta);
+        System.out.println(porto.getCapacidadeTotalContentores());
 
-       
     }
 
 }
