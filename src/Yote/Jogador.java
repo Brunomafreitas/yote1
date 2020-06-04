@@ -10,8 +10,8 @@ package Yote;
  * @author senho
  */
 public class Jogador {
-    private String nome;
-    private String peca;
+     String nome;
+     String peca;
     
     public Jogador(String nome, String peca){
         this.nome = nome;

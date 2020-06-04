@@ -94,9 +94,13 @@ public class lista {
     public void movePecaLisa(int x, int y, int casaAtualX, int casaAtualY){
         Posicao pos = new Posicao(x,y);
         peca p = new peca(pos,"Lisa");
+        if((((casaAtualX + casaAtualY))/(x+y)) > 0.2){
+            System.out.println("Não pode mover para ai!!");
+        }
         try{
         for(int l = 0; l<tabuleiro.length; l++){ //percorre as linhas
-            for(int c = 0; c < tabuleiro[l].length; c++){ //percorre as colunas
+            for(int c = 0; c < tabuleiro[l].length; c++){
+                //percorre as colunas
             if(tabuleiro[x][y] == "-"){                
                tabuleiro[x][y]=tabuleiro[casaAtualX][casaAtualY]; 
                 tabuleiro[x][y] = "L";
