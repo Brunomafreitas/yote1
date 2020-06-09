@@ -12,11 +12,23 @@ package Yote;
 public class peca {
     
     private String nome;
-    public Posicao pos;
+    private Posicao pos;
+    private peca next;
     public peca(Posicao pos, String nome){
         this.nome = nome;
         this.pos = pos;
     }
+    public peca( String nome){
+        this.nome = nome;
+      
+    }
+    
+    public peca( peca next){
+        this.next = next;
+      
+    }
+    
+    
 
     public String getTipo() {
         return nome;
@@ -27,6 +39,13 @@ public class peca {
 
     public Posicao getPos() {
         return pos;
+    }
+    public peca getNext(){
+        return next;
+    }
+    
+    public void setNext(peca c){
+        next = c;
     }
 
     public void setPos(Posicao pos) {

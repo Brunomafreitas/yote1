@@ -29,7 +29,61 @@ public class yote {
         Jogador j1 = new Jogador(player1, lePeca);
         System.out.println(j1.nome + " qual as peças que escolhe?");
         lePeca = Le.umaString();
-
+        
+        
+        peca p1 = new peca("Lisas");
+        peca p2 = new peca("Lisas");
+        peca p3 = new peca("Lisas");
+        peca p4 = new peca("Lisas");
+        peca p5 = new peca("Lisas");
+        peca p6 = new peca("Lisas");
+        peca p7 = new peca("Lisas");
+        peca p8 = new peca("Lisas");
+        peca p9 = new peca("Lisas");
+        peca p10 = new peca("Lisas");
+        peca p11 = new peca("Lisas");
+        peca p12 = new peca("Lisas");
+        l.insereIni(p1);
+        l.insereIni(p2);
+        l.insereIni(p3);
+        l.insereIni(p4);
+        l.insereIni(p5);
+        l.insereIni(p6);
+        l.insereIni(p7);
+        l.insereIni(p8);
+        l.insereIni(p9);
+        l.insereIni(p10);
+        l.insereIni(p11);
+        l.insereIni(p12);
+        
+        peca p13 = new peca("Perfuradas");
+        peca p14 = new peca("Perfuradas");
+        peca p15 = new peca("Perfuradas");
+        peca p16 = new peca("Perfuradas");
+         peca p17 = new peca("Perfuradas");
+        peca p18 = new peca("Perfuradas");
+        peca p19 = new peca("Perfuradas");
+        peca p20 = new peca("Perfuradas");
+        peca p21 = new peca("Perfuradas");
+        peca p22 = new peca("Perfuradas");
+        peca p23 = new peca("Perfuradas");
+        peca p24 = new peca("Perfuradas");
+        
+        l.insereIniPerfura(p13);
+        l.insereIniPerfura(p14);
+        l.insereIniPerfura(p15);
+        l.insereIniPerfura(p16);
+        l.insereIniPerfura(p17);
+        l.insereIniPerfura(p18);
+        l.insereIniPerfura(p19);
+        l.insereIniPerfura(p20);
+        l.insereIniPerfura(p21);
+        l.insereIniPerfura(p22);
+        l.insereIniPerfura(p23);
+        l.insereIniPerfura(p24);
+        
+    
+        
         Jogador j2 = new Jogador(player2, lePeca2);
         if (lePeca.equals("Lisas")) {
             lePeca2 = "Perfuradas";
@@ -44,7 +98,8 @@ public class yote {
             System.out.println("-------------Seu turno!---------------");
             System.out.println("-----------Insira uma opção -----------");
             System.out.println(" 1 - Jogar peça");
-            System.out.println(" 2 - Mover peça");            
+            System.out.println(" 2 - Mover peça");   
+            System.out.println(" 2 - Mover peça"); 
             System.out.println(" 0 - Sair");
             op = Le.umInt();
             switch (op) {
@@ -62,32 +117,31 @@ public class yote {
                     }
                     l.printTabuleiro();
                     currentPlayer = false;
+                    l.printPecasLisas();
                     break;
 
                 case 2:
+                    if(l.printPecasLisas() == 12){
+                        System.out.println("Não existem peças para mover, escolha outra opção");
+                    }else{
                     System.out.println("Que peça deseja mover(indique a casa)");
                     System.out.println("---------X----------");
                     int escolha = Le.umInt();
                     System.out.println("--------Y----------");
                     int escolhaY = Le.umInt();
-                    System.out.println("Para que casa?");
-                    System.out.println("--------X-------");
-                    int vePeca = Le.umInt();
-                    System.out.println("-----------Y--------");
-                    int vePeca1 = Le.umInt();
-                    if (lePeca2 == "Perfuradas") {
-                        l.movePecaLisa(vePeca, vePeca1, escolha, escolhaY);
-                    } else {
-                        l.movePecaPerfurada(vePeca, vePeca1, escolha, escolhaY);
-                    }
+                    System.out.println("Para que casa ( Use A W S D)");
+                    String l1 = Le.umaString();
+                    l.movePecaLisa(l1, escolhaY, escolhaY);
                     l.printTabuleiro();
-                    ;
-                    currentPlayer = false;
-                    break;
+                    }
                    
                 
                 case 0:
                     turno = false;
+                    
+                    if(l.printPecasLisas() == 0){
+                        
+                    }
             }
         }
     }
@@ -98,5 +152,7 @@ public class yote {
     public static void main(String[] args) {
 
         menu();
+      
+                
     }
 }
