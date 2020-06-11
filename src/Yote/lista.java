@@ -34,28 +34,28 @@ public class lista {
     private int countPerfuradas, countLisas;
     public lista(){
         inicio = null;
+      
         tabuleiro = new String[6][5];
         countPerfuradas = 0;
         countLisas = 0;
          for (int x=0; x < 6; x++) {
+             
               for (int y=0; y < tabuleiro[x].length; y++) {
                   tabuleiro[x][y] = "-";
               }
          }
     }
+     
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public int  printPecasLisas(){
-        int ct = 0;
-        peca apt;
-        
-        for( apt=inicioPerfurada; apt != null && apt.getTipo() == "Perfuradas"; apt = apt.getNext()){
-            if(apt.getTipo() == "Perfuradas"){
-            ct++;           
-            }
-        }   
-        System.out.println("Número de peças Perfuradas restantes " + ct);
-        return ct;
-    }
-    public int  printPecasPerfuradas(){
         int ct = 0;
         peca apt;
         
@@ -67,13 +67,28 @@ public class lista {
         System.out.println("Número de peças Lisas restantes " + ct);
         return ct;
     }
+    public int  printPecasPerfuradas(){
+        int ct = 0;
+        peca apt;
+        
+        for( apt=inicioPerfurada; apt != null && apt.getTipo() == "Perfuradas"; apt = apt.getNext()){
+            if(apt.getTipo() == "Perfuradas"){
+            ct++;           
+            }
+        }   
+        System.out.println("Número de peças Perfuradas restantes " + ct);
+        return ct;
+    }
     
     
     public void printTabuleiro(){
+        int linhas = 0;
+        int colunas = 0;
        for (int x=0; x < 6; x++) {
+
             System.out.print("|");
         for (int y=0; y < tabuleiro[x].length; y++) {
-                
+              
             System.out.print (tabuleiro[x][y]);
             if (y!=tabuleiro[x].length-1) System.out.print("\t");
             }
@@ -81,345 +96,283 @@ public class lista {
 }
     
     }
-    public boolean inserePecaLisa(int n, int y){
-        Posicao pos = new Posicao(n,y);
-        peca p = new peca(pos,"Lisa");
+ 
+    
+     public boolean inserirPeca(int x, int y,String tipo){
+         
         int ctMaximo = 0;
-        if(tabuleiro[n][y]=="L" || tabuleiro[n][y]=="P"){
+        String verificaTipo = " ";
+        
+         System.out.println(tipo);
+        if(tabuleiro[x][y]== "L" || tabuleiro[x][y]== "P"){
         System.out.println("Escolha outra posição!");
         }
         try{
-            
+            if(tipo.equals("Lisas")){
+            verificaTipo = "L";
+        }else{
+            verificaTipo = "P";
+        }
         for(int l = 0; l<tabuleiro.length; l++){ //percorre as linhas
             
             for(int c = 0; c < tabuleiro[l].length; c++){ //percorre as colunas
                 
-                if(tabuleiro[n][y]=="-"){ //verifica se aquele índice esta vazio
-                    p.setPos(pos); //define a posicao da peça
-                    tabuleiro[n][y] = "L"; //define a posicao [n][y] como L
+                if(tabuleiro[x][y]=="-"){ //verifica se aquele índice esta vazio
+                    
+                    tabuleiro[x][y] = verificaTipo; //define a posicao [n][y] como L
                     ctMaximo++;
                     System.out.println(ctMaximo);
-                    
+                    if(verificaTipo=="L"){
                     inicio = inicio.getNext();
-                    
-                }}
-                
-            }
-        }catch(NullPointerException e ){
-                    System.out.println("Posição inválida!");
-                }
-        
-        return true;
-    }
-     public boolean inserePecaPerfurada(int n, int y){
-         Posicao pos = new Posicao(n,y);
-        peca p = new peca(pos,"Perfurada");
-        int ctMaximo = 0;
-        if(tabuleiro[n][y]=="L" || tabuleiro[n][y]=="P"){
-        System.out.println("Escolha outra posição!");
-        }
-        try{
-            
-        for(int l = 0; l<tabuleiro.length; l++){ //percorre as linhas
-            
-            for(int c = 0; c < tabuleiro[l].length; c++){ //percorre as colunas
-                
-                if(tabuleiro[n][y]=="-"){ //verifica se aquele índice esta vazio
-                    p.setPos(pos); //define a posicao da peça
-                    tabuleiro[n][y] = "P"; //define a posicao [n][y] como L
-                    ctMaximo++;
-                    System.out.println(ctMaximo);
-                    
+                    }else{
                     inicioPerfurada = inicioPerfurada.getNext();
-                    
+                    }
                 }}
                 
             }
-        }catch(NullPointerException e ){
+        
+        }catch(ArrayIndexOutOfBoundsException e ){
+            e.getMessage().toString();
                     System.out.println("Posição inválida!");
                 }
         
+        
         return true;
-    }
+     }
+     
+     
+     public int movePeca(int posAtualX, int posAtualY, String tipo, String posSeguinte){
+         
+         int countPecaCapturadaL = 0;
+         int countPecaCapturadaP = 0;
+         String tipo1;
+         String tipo2;
+         String leOp = " ";
+         
+         if(tipo.equals("Lisas")){
+             tipo1 = "L";
+             tipo2 = "P";
+         }else{
+             tipo1 = "P";
+             tipo2 = "L";
+         }
+         
+         if(posSeguinte.equals("A") || posSeguinte.equals("a")){
+             if(tabuleiro[posAtualX][posAtualY-1].equals(tipo2)){
+                 tabuleiro[posAtualX][posAtualY-1] = "-";
+                 tabuleiro[posAtualX][posAtualY-2] = tipo1;
+                 tabuleiro[posAtualX][posAtualY] = "-";
+                 printTabuleiro();
+                 System.out.println("Quer capturar outra peça?");
+                leOp = Le.umaString();
+                 if(leOp.equals("S") || leOp.equals("s")){
+                     System.out.println("De qual posição?");
+                     System.out.println("X----");
+                     int leCaptura2X = Le.umInt();
+                     System.out.println("Y----");
+                     int leCaptura2Y = Le.umInt();
+                     if(tabuleiro[leCaptura2X][leCaptura2Y].equals(tipo2)){
+                         tabuleiro[leCaptura2X][leCaptura2Y] = "-";
+                         if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                            }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                            }
+                     } 
+                 }else{
+                     System.out.println("Okapa");
+                 }
+                 if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                 }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                 }
+             }else{
+             tabuleiro[posAtualX][posAtualY-1] = tipo1;
+             tabuleiro[posAtualX][posAtualY] = "-";
+             }
+             
+         }
+         
+         
+  
+         if(posSeguinte.equals("W") || posSeguinte.equals("w")){
+             if(tabuleiro[posAtualX-1][posAtualY].equals(tipo2)){
+                 tabuleiro[posAtualX-1][posAtualY] = "-";
+                 tabuleiro[posAtualX-2][posAtualY] = tipo1;
+                 tabuleiro[posAtualX][posAtualY]="-";
+                  printTabuleiro();
+                 System.out.println("Quer capturar outra peça?");
+                leOp = Le.umaString();
+                 if(leOp.equals("S") || leOp.equals("s")){
+                     System.out.println("De qual posição?");
+                     System.out.println("X----");
+                     int leCaptura2X = Le.umInt();
+                     System.out.println("Y----");
+                     int leCaptura2Y = Le.umInt();
+                     if(tabuleiro[leCaptura2X][leCaptura2Y].equals(tipo2)){
+                         tabuleiro[leCaptura2X][leCaptura2Y] = "-";
+                         if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                            }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                            }
+                     } 
+                 }else{
+                     System.out.println("Okapa");
+                 }
+                 if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                 }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                 }
+             }else{
+             tabuleiro[posAtualX-1][posAtualY] = tipo1;
+             tabuleiro[posAtualX][posAtualY] = "-";
+             }
+             
+             }
+         
+         
+         
+         
+         if(posSeguinte.equals("S") || posSeguinte.equals("s")){
+             if(tabuleiro[posAtualX+1][posAtualY].equals(tipo2)){
+                 tabuleiro[posAtualX+1][posAtualY] = "-";
+                 tabuleiro[posAtualX+2][posAtualY] = tipo1;
+                 tabuleiro[posAtualX][posAtualY]="-";
+                  printTabuleiro();
+                 System.out.println("Quer capturar outra peça?");
+                leOp = Le.umaString();
+                 if(leOp.equals("S") || leOp.equals("s")){
+                     System.out.println("De qual posição?");
+                     System.out.println("X----");
+                     int leCaptura2X = Le.umInt();
+                     System.out.println("Y----");
+                     int leCaptura2Y = Le.umInt();
+                     if(tabuleiro[leCaptura2X][leCaptura2Y].equals(tipo2)){
+                         tabuleiro[leCaptura2X][leCaptura2Y] = "-";
+                         if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                            }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                            }
+                     } 
+                 }else{
+                     System.out.println("Okapa");
+                 }
+                 if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                 }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                 }
+             }else{            
+             tabuleiro[posAtualX+1][posAtualY] = tipo1;
+             tabuleiro[posAtualX][posAtualY] = "-";
+             }
+         }
+         
+         
+         
+         
+         
+         
+         if(posSeguinte.equals("D") || posSeguinte.equals("d")){ 
+             if(tabuleiro[posAtualX][posAtualY+1].equals(tipo2)){
+                 tabuleiro[posAtualX][posAtualY+1] = "-";
+                 tabuleiro[posAtualX][posAtualY+2] = tipo1;
+                 tabuleiro[posAtualX][posAtualY] = "-";
+                  printTabuleiro();
+                 System.out.println("Quer capturar outra peça?");
+                leOp = Le.umaString();
+                 if(leOp.equals("S") || leOp.equals("s")){
+                     System.out.println("De qual posição?");
+                     System.out.println("X----");
+                     int leCaptura2X = Le.umInt();
+                     System.out.println("Y----");
+                     int leCaptura2Y = Le.umInt();
+                     if(tabuleiro[leCaptura2X][leCaptura2Y].equals(tipo2)){
+                         tabuleiro[leCaptura2X][leCaptura2Y] = "-";
+                         if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                            }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                            }
+                     } 
+                 }else{
+                     System.out.println("Okapa");
+                 }
+                 if(tipo2 == "L"){
+                     countPecaCapturadaL++;
+                     System.out.println("Você já capturou "+countPecaCapturadaL+" peças Lisas" );
+                 }else{
+                     countPecaCapturadaP++;
+                     System.out.println("Você já capturou "+countPecaCapturadaP+" peças Perfuradas" );
+                 }
+             }else{
+             tabuleiro[posAtualX][posAtualY+1] = tipo1;
+             tabuleiro[posAtualX][posAtualY] = "-";
+         }
+         }  
+         
+         
+         
+        
+         if(countPecaCapturadaL == 12 ||countPecaCapturadaP == 12 ){
+             System.out.println("Parabéns você ganhou!");
+             
+             System.exit(0);
+         }
+         
+         
+         
+         
+         
+         
+         if(countPecaCapturadaL == 12) return countPecaCapturadaL;
+         else return countPecaCapturadaP;
+         
+     }
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
+     
     
-    public void movePecaLisa(String op, int casaAtualX, int casaAtualY){
-        
-        
-        Posicao p1 = new Posicao(casaAtualX, casaAtualY);
-        peca p = new peca(p1,"Lisa");
-        boolean mexeuMal = true;
-       if(tabuleiro[casaAtualX][casaAtualY] == "-"){
-            System.out.println("Não tem peça nessa casa");
-        
-        }else{
-        
-        try{
-            
-            while(mexeuMal == true){
-                 //para a esquerda--------------------------------------------
-                  if(op.equals("A") || op.equals("a")){
-                         if(tabuleiro[casaAtualX][casaAtualY+1].equals("L")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX][casaAtualY-1] == "P"){
-                      p1.setY(casaAtualY + 2);
-                      tabuleiro[casaAtualX][casaAtualY+2] = "L";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX][casaAtualY+1] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX][casaAtualY-1] = "L";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                      
-                  }
-                  //---------------Para a direita
-                  if(op.equals("D") || op.equals("d")){
-                       if(tabuleiro[casaAtualX][casaAtualY+1].equals("L")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX][casaAtualY+1] == "P"){
-                      p1.setY(casaAtualY + 2);
-                      tabuleiro[casaAtualX][casaAtualY+2] = "L";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX][casaAtualY+1] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX][casaAtualY+1] = "L";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                  }
-                  
-                  
-                  //------------------- PARA CIMA------------------------
-                 if(op.equals("W") || op.equals("w")){
-                       if(tabuleiro[casaAtualX-1][casaAtualY].equals("L")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX-1][casaAtualY] == "P"){
-                      p1.setY(casaAtualX - 2);
-                      tabuleiro[casaAtualX+2][casaAtualY] = "L";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX-1][casaAtualY] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX-1][casaAtualY] = "L";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                  }
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
- //------------------------------Para baixo                 
-                  
-                  
-                  
-                  
-                  if(op.equals("S") || op.equals("s")){
-                      if(tabuleiro[casaAtualX+1][casaAtualY].equals("L")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX+1][casaAtualY] == "P"){
-                      p1.setY(casaAtualX + 2);
-                      tabuleiro[casaAtualX+2][casaAtualY] = "L";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX+1][casaAtualY] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX +1 );
-                          tabuleiro[casaAtualX+1][casaAtualY] = "L";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }}
-            }
-            
-                      
-}
-            
-            
-            
-    
-            
-        catch(ArrayIndexOutOfBoundsException e){
-        System.out.println("Posição inválida!");
-    }}
-    
-    }
-    public void movePecaPerfurada(String op, int casaAtualX, int casaAtualY){
-          Posicao p1 = new Posicao(casaAtualX, casaAtualY);
-        peca p = new peca(p1,"Perfurada");
-        boolean mexeuMal = true;
-       if(tabuleiro[casaAtualX][casaAtualY] == "-"){
-            System.out.println("Não tem peça nessa casa");
-        
-        }else{
-        
-        try{
-            
-            while(mexeuMal == true){
-                 //para a esquerda--------------------------------------------
-                  if(op.equals("A") || op.equals("a")){
-                         if(tabuleiro[casaAtualX][casaAtualY+1].equals("P")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX][casaAtualY-1] == "L"){
-                      p1.setY(casaAtualY + 2);
-                      tabuleiro[casaAtualX][casaAtualY+2] = "P";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX][casaAtualY+1] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX][casaAtualY-1] = "P";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                      
-                  }
-                  //---------------Para a direita
-                  if(op.equals("D") || op.equals("d")){
-                       if(tabuleiro[casaAtualX][casaAtualY+1].equals("P")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX][casaAtualY+1] == "L"){
-                      p1.setY(casaAtualY + 2);
-                      tabuleiro[casaAtualX][casaAtualY+2] = "P";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX][casaAtualY+1] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX][casaAtualY+1] = "P";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                  }
-                  
-                  
-                  //------------------- PARA CIMA------------------------
-                 if(op.equals("W") || op.equals("w")){
-                       if(tabuleiro[casaAtualX-1][casaAtualY].equals("P")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX-1][casaAtualY] == "L"){
-                      p1.setY(casaAtualX - 2);
-                      tabuleiro[casaAtualX+2][casaAtualY] = "P";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX-1][casaAtualY] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX -1 );
-                          tabuleiro[casaAtualX-1][casaAtualY] = "P";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }
-                  }
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
- //------------------------------Para baixo                 
-                  
-                  
-                  
-                  
-                  if(op.equals("S") || op.equals("s")){
-                      if(tabuleiro[casaAtualX+1][casaAtualY].equals("P")){
-                          System.out.println("Escolha outra casa");
-                          String escolherOutra = Le.umaString();
-                          mexeuMal = false;
-                      }else{
-                      if(tabuleiro[casaAtualX+1][casaAtualY] == "L"){
-                      p1.setY(casaAtualX + 2);
-                      tabuleiro[casaAtualX+2][casaAtualY] = "P";
-                      tabuleiro[casaAtualX][casaAtualY] = "-";
-                      tabuleiro[casaAtualX+1][casaAtualY] = "-";
-                      mexeuMal = false; 
-                      
-                      
-                      }else{
-                          p1.setY(casaAtualX +1 );
-                          tabuleiro[casaAtualX+1][casaAtualY] = "P";
-                          tabuleiro[casaAtualX][casaAtualY] = "-";
-                          mexeuMal = false;
-                      }
-                     
-                  }}
-            }
-            
-                      
-}
-            
-            
-            
-    
-            
-        catch(ArrayIndexOutOfBoundsException e){
-        System.out.println("Posição inválida!");
-    }}
-    }
-    
+   
      
        }
     

@@ -13,24 +13,44 @@ import comum.Le;
  */
 public class yote {
 
+    public static void lisasprimeiro() {
+
+    }
+
     public static void menu() {
         boolean turno = true;
+        peca[] pecas = new peca[2];
         lista l = new lista();
-        String lePeca2 = " ";
-        String lePeca = " ";
+        String lePeca2;
+        String lePeca;
         int x;
-        boolean currentPlayer = false;
+        Jogador j1;
+        Jogador j2;
+
         System.out.println("------Saudações!-------");
         int op = -1;
+        Jogador[] jogadores = new Jogador[2];
         System.out.println("Insira o nome do jogador 1");
         String player1 = Le.umaString();
+
         System.out.println("Insira o nome do jogador 2");
         String player2 = Le.umaString();
-        Jogador j1 = new Jogador(player1, lePeca);
-        System.out.println(j1.nome + " qual as peças que escolhe?");
+
+        System.out.println(player1 + " qual as peças que escolhe?");
         lePeca = Le.umaString();
-        
-        
+
+        if (lePeca.equals("Lisas")) {
+            lePeca2 = "Perfuradas";
+
+        } else {
+            lePeca2 = "Lisas";
+        }
+
+        j1 = new Jogador(player1, lePeca);
+        j2 = new Jogador(player2, lePeca2);
+        jogadores[0] = j1;
+        jogadores[1] = j2;
+        //-----------------------------------------------------------------------------
         peca p1 = new peca("Lisas");
         peca p2 = new peca("Lisas");
         peca p3 = new peca("Lisas");
@@ -55,12 +75,12 @@ public class yote {
         l.insereIni(p10);
         l.insereIni(p11);
         l.insereIni(p12);
-        
+
         peca p13 = new peca("Perfuradas");
         peca p14 = new peca("Perfuradas");
         peca p15 = new peca("Perfuradas");
         peca p16 = new peca("Perfuradas");
-         peca p17 = new peca("Perfuradas");
+        peca p17 = new peca("Perfuradas");
         peca p18 = new peca("Perfuradas");
         peca p19 = new peca("Perfuradas");
         peca p20 = new peca("Perfuradas");
@@ -68,7 +88,7 @@ public class yote {
         peca p22 = new peca("Perfuradas");
         peca p23 = new peca("Perfuradas");
         peca p24 = new peca("Perfuradas");
-        
+
         l.insereIniPerfura(p13);
         l.insereIniPerfura(p14);
         l.insereIniPerfura(p15);
@@ -81,78 +101,83 @@ public class yote {
         l.insereIniPerfura(p22);
         l.insereIniPerfura(p23);
         l.insereIniPerfura(p24);
-        
-    
-        
-        Jogador j2 = new Jogador(player2, lePeca2);
-        if (lePeca.equals("Lisas")) {
-            lePeca2 = "Perfuradas";
-        } else {
-            lePeca2 = "Lisas";
-        }
-        System.out.println(j2.nome + " Você ficou com as peças " + lePeca2);
-        currentPlayer = true;
-        if(currentPlayer==true){
-        while (op != 0  ) {
-           
-            System.out.println("-------------Seu turno!---------------");
-            System.out.println("-----------Insira uma opção -----------");
-            System.out.println(" 1 - Jogar peça");
-            System.out.println(" 2 - Mover peça");   
-            System.out.println(" 2 - Mover peça"); 
-            System.out.println(" 0 - Sair");
-            op = Le.umInt();
-            switch (op) {
 
-                case 1:
-                    System.out.println("Em que casa deseja colocar a peça");
-                    System.out.println("X----");
-                    int leCasa = Le.umInt();
-                    System.out.println("Y----");
-                    int leCasaY = Le.umInt();
-                    if (lePeca2 == "Perfuradas") {
-                        l.inserePecaLisa(leCasa, leCasaY);
-                    } else {
-                        l.inserePecaPerfurada(leCasa, leCasaY);
-                    }
-                    l.printTabuleiro();
-                    currentPlayer = false;
-                    l.printPecasLisas();
-                    break;
+        System.out.println("");
+        System.out.println("");
+        System.out.println(j2.getNome() + " Você ficou com as peças " + lePeca2);
+        System.out.println("");
+        System.out.println("");
+        System.out.println(j1.getNome() + " Você ficou com as peças " + lePeca);
 
-                case 2:
-                    if(l.printPecasLisas() == 12){
-                        System.out.println("Não existem peças para mover, escolha outra opção");
-                    }else{
-                    System.out.println("Que peça deseja mover(indique a casa)");
-                    System.out.println("---------X----------");
-                    int escolha = Le.umInt();
-                    System.out.println("--------Y----------");
-                    int escolhaY = Le.umInt();
-                    System.out.println("Para que casa ( Use A W S D)");
-                    String l1 = Le.umaString();
-                    l.movePecaLisa(l1, escolhaY, escolhaY);
-                    l.printTabuleiro();
-                    }
-                   
-                
-                case 0:
-                    turno = false;
-                    
-                    if(l.printPecasLisas() == 0){
-                        
-                    }
+        
+        while (op != 0) {
+            for (int c = 0; c < 2; c++) {
+                System.out.println(jogadores[c].getPeca());
+                System.out.println("Seu turno!   " + jogadores[c].getNome() + " ");
+                System.out.println("");
+                System.out.println("");
+                System.out.println("-----------Insira uma opção -----------");
+                System.out.println(" 1 - Jogar peça");
+                System.out.println(" 2 - Mover peça");
+                System.out.println(" 0 - Sair");
+                op = Le.umInt();
+
+                //---------------------------------------------------------------------------------------------------------------------------
+                switch (op) {
+
+                    case 1:
+
+                        System.out.println("Em que casa deseja colocar a peça");
+                        System.out.println("X----");
+                        int leCasa = Le.umInt();
+                        System.out.println("Y----");
+                        int leCasaY = Le.umInt();
+                        l.inserirPeca(leCasa, leCasaY, jogadores[c].getPeca());
+                        l.printTabuleiro();
+                        System.out.println("");
+                        if(jogadores[c].getPeca()=="Lisas"){
+                        l.printPecasLisas();
+                        }else{
+                            l.printPecasPerfuradas();
+                        }
+                        if (l.printPecasLisas() == 0) {
+                            System.out.println("Não pode inserir mais peças!!");
+                        }
+                        if (l.printPecasPerfuradas() == 0) {
+                            System.out.println("Não pode inserir mais peças!!");
+                        }
+
+                        break;
+
+                    case 2:
+                     
+                            System.out.println("Que peça deseja mover(indique a casa)");
+                            System.out.println("---------X----------");
+                            int escolha = Le.umInt();
+                            System.out.println("--------Y----------");
+                            int escolhaY = Le.umInt();
+                            System.out.println("Para que casa ( Use A W S D)");
+                            String l1 = Le.umaString();
+                            l.movePeca( escolha, escolhaY,jogadores[c].getPeca(),l1 );
+                            l.printTabuleiro();
+                            
+
+                    case 0:
+                        turno = false;
+
+                        if (l.printPecasLisas() == 0) {
+
+                        }
+                }
+                //---------------------------------------------------------------------------------------------------------------------------
             }
         }
+
     }
-    else{
-    menu();
-}}
 
     public static void main(String[] args) {
 
         menu();
-      
-                
+
     }
 }

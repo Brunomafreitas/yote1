@@ -10,12 +10,20 @@ package Yote;
  * @author senho
  */
 public class Jogador {
-     String nome;
-     String peca;
+     private String nome;
+     private String peca;
     
     public Jogador(String nome, String peca){
         this.nome = nome;
         this.peca = peca;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getPeca() {
+        return peca;
     }
     
     
