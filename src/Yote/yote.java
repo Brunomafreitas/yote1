@@ -109,7 +109,6 @@ public class yote {
         System.out.println("");
         System.out.println(j1.getNome() + " Você ficou com as peças " + lePeca);
 
-        
         while (op != 0) {
             for (int c = 0; c < 2; c++) {
                 System.out.println(jogadores[c].getPeca());
@@ -122,7 +121,7 @@ public class yote {
                 System.out.println(" 0 - Sair");
                 op = Le.umInt();
 
-                //---------------------------------------------------------------------------------------------------------------------------
+                //----------------------asddsaasddasdas-----------------------------------------------------------------------------------------------------
                 switch (op) {
 
                     case 1:
@@ -135,32 +134,43 @@ public class yote {
                         l.inserirPeca(leCasa, leCasaY, jogadores[c].getPeca());
                         l.printTabuleiro();
                         System.out.println("");
-                        if(jogadores[c].getPeca()=="Lisas"){
-                        l.printPecasLisas();
-                        }else{
+                        if (jogadores[c].getPeca() == "Lisas") {
+                            l.printPecasLisas();
+                        } else {
                             l.printPecasPerfuradas();
                         }
                         if (l.printPecasLisas() == 0) {
-                            System.out.println("Não pode inserir mais peças!!");
+                            System.out.println("Não há mais peças Lisas para jogar, só pode fazer movimentos agora!");
                         }
                         if (l.printPecasPerfuradas() == 0) {
-                            System.out.println("Não pode inserir mais peças!!");
+                            System.out.println("Não há mais peças Perfuradas para jogar, só pode fazer movimentos agora!");
                         }
 
                         break;
 
                     case 2:
-                     
-                            System.out.println("Que peça deseja mover(indique a casa)");
-                            System.out.println("---------X----------");
-                            int escolha = Le.umInt();
-                            System.out.println("--------Y----------");
-                            int escolhaY = Le.umInt();
-                            System.out.println("Para que casa ( Use A W S D)");
-                            String l1 = Le.umaString();
-                            l.movePeca( escolha, escolhaY,jogadores[c].getPeca(),l1 );
-                            l.printTabuleiro();
-                            
+
+                        System.out.println("Que peça deseja mover(indique a casa)");
+                        System.out.println("---------X----------");
+                        int escolha = Le.umInt();
+                        System.out.println("--------Y----------");
+                        int escolhaY = Le.umInt();
+                        System.out.println("Para que casa ( Use A W S D)");
+                        String l1 = Le.umaString();
+
+                        l.movePeca(escolha, escolhaY, jogadores[c].getPeca(), l1);
+                            if(l.printPecasLisasCapturadas()>=2){
+                                 if(jogadores[c].getPeca().equals("Perfuradas")){
+                                 System.out.println(jogadores[c].getNome() + "Ganhou!");
+                                 System.exit(0);
+                                 }
+                             }else if(l.printPecasPerfuradasCapturadas() >= 2){
+                                 if(jogadores[c].getPeca().equals("Perfuradas")){
+                                 System.out.println(jogadores[c].getNome() + "Ganhou!");
+                                 System.exit(0);
+                                 }
+                             }
+                        l.printTabuleiro();
 
                     case 0:
                         turno = false;
@@ -169,6 +179,8 @@ public class yote {
 
                         }
                 }
+
+               
                 //---------------------------------------------------------------------------------------------------------------------------
             }
         }
